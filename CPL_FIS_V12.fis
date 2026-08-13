@@ -1,0 +1,47 @@
+[System]
+Name='CPL_FIS_V12'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=5
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='APF_WF_ang'
+Range=[0 180]
+NumMFs=2
+MF1='low':'sigmf',[-0.341536807843871 16.2208463535229]
+MF2='high':'sigmf',[0.113654446002132 45.13]
+
+[Input2]
+Name='dist_closest_LM'
+Range=[0 10]
+NumMFs=2
+MF1='low':'sigmf',[-2.73554689151501 1.9359182565701]
+MF2='high':'sigmf',[1.60879523096468 6.03175776397515]
+
+[Input3]
+Name='angular_coverage'
+Range=[0 1]
+NumMFs=2
+MF1='low':'sigmf',[-14.0889627500653 0.293144329896907]
+MF2='high':'sigmf',[10.8504365003418 0.663196907216495]
+
+[Output1]
+Name='CPL'
+Range=[0 1]
+NumMFs=2
+MF1='low':'sigmf',[-15 0.3]
+MF2='high':'sigmf',[15 0.7]
+
+[Rules]
+1 0 0, 2 (1) : 1
+2 0 0, 1 (1) : 1
+0 1 0, 1 (0.5) : 1
+0 0 2, 1 (0.3) : 1
+0 0 1, 2 (0.3) : 1

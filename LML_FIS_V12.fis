@@ -1,0 +1,56 @@
+[System]
+Name='LML_FIS_V12'
+Type='mamdani'
+Version=2.0
+NumInputs=4
+NumOutputs=1
+NumRules=8
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='mag(APF)'
+Range=[0 6]
+NumMFs=2
+MF1='low':'sigmf',[-4.87001283031507 0.813349814585909]
+MF2='high':'sigmf',[6.64506423575701 0.711372064276885]
+
+[Input2]
+Name='disp_1s'
+Range=[0 2.01]
+NumMFs=2
+MF1='low':'sigmf',[-31.1851698783334 0.177997527812114]
+MF2='high':'sigmf',[15.43 0.505552781211372]
+
+[Input3]
+Name='disp_3s'
+Range=[0 5]
+NumMFs=2
+MF1='low':'sigmf',[-4.41789842020564 1.20500988875155]
+MF2='high':'sigmf',[4.70506485792598 1.80433127317676]
+
+[Input4]
+Name='dist2goal'
+Range=[0 50]
+NumMFs=1
+MF1='close':'sigmf',[-2.01558414070578 4.35098757763975]
+
+[Output1]
+Name='mu_LM'
+Range=[0 1]
+NumMFs=2
+MF1='low':'sigmf',[-15 0.3]
+MF2='high':'sigmf',[15 0.7]
+
+[Rules]
+1 0 0 1, 1 (1) : 1
+1 0 0 -1, 2 (1) : 1
+2 0 0 1, 1 (1) : 1
+2 0 0 -1, 1 (1) : 1
+0 1 0 0, 2 (1) : 1
+0 2 0 0, 1 (1) : 1
+0 0 1 0, 2 (1) : 1
+0 0 2 0, 1 (1) : 1
