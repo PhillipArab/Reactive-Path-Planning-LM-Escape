@@ -48,34 +48,34 @@ show3D(MyScenario);
 hold on;
 title("Path Planning Points View");
 
-%% Add overlay plots
+%% Add overlay line plots
 
-% Trajectory
+% UAV Trajectory
 UAV_traj = squeeze(out.trajectoryPoints)';
 h_traj = plot3(UAV_traj(:,1),UAV_traj(:,2),UAV_traj(:,3),"-b");
 
+% Start Box
+sc = S.(scenario).start_centre;
+ss = S.(scenario).start_spread;
+plot3([sc(1)-ss(1)/2, sc(1)+ss(1)/2, sc(1)+ss(1)/2, sc(1)-ss(1)/2, sc(1)-ss(1)/2], ...
+      [sc(2)-ss(2)/2, sc(2)-ss(2)/2, sc(2)+ss(2)/2, sc(2)+ss(2)/2, sc(2)-ss(2)/2], ...
+      repmat(sc(3),1,5), 'b--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
 
-% % Start/Goal/Obstacle boxes (no legend entry)
-% sc = S.(scenario).start_centre;
-% ss = S.(scenario).start_spread;
-% plot3([sc(1)-ss(1)/2, sc(1)+ss(1)/2, sc(1)+ss(1)/2, sc(1)-ss(1)/2, sc(1)-ss(1)/2], ...
-%       [sc(2)-ss(2)/2, sc(2)-ss(2)/2, sc(2)+ss(2)/2, sc(2)+ss(2)/2, sc(2)-ss(2)/2], ...
-%       repmat(sc(3),1,5), 'b--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
-% 
-% gc = S.(scenario).goal_centre;
-% gs = S.(scenario).goal_spread;
-% plot3([gc(1)-gs(1)/2, gc(1)+gs(1)/2, gc(1)+gs(1)/2, gc(1)-gs(1)/2, gc(1)-gs(1)/2], ...
-%       [gc(2)-gs(2)/2, gc(2)-gs(2)/2, gc(2)+gs(2)/2, gc(2)+gs(2)/2, gc(2)-gs(2)/2], ...
-%       repmat(gc(3),1,5), 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
-% 
-% % Obstacle box (rand scenario only)
-% if strcmp(scenario, 'rand')
-%     oc = S.rand.obs_centre;
-%     os = S.rand.obs_spread;
-%     plot3([oc(1)-os(1)/2, oc(1)+os(1)/2, oc(1)+os(1)/2, oc(1)-os(1)/2, oc(1)-os(1)/2], ...
-%           [oc(2)-os(2)/2, oc(2)-os(2)/2, oc(2)+os(2)/2, oc(2)+os(2)/2, oc(2)-os(2)/2], ...
-%           repmat(sc(3),1,5), 'b--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
-% end
+% Goal Box
+gc = S.(scenario).goal_centre;
+gs = S.(scenario).goal_spread;
+plot3([gc(1)-gs(1)/2, gc(1)+gs(1)/2, gc(1)+gs(1)/2, gc(1)-gs(1)/2, gc(1)-gs(1)/2], ...
+      [gc(2)-gs(2)/2, gc(2)-gs(2)/2, gc(2)+gs(2)/2, gc(2)+gs(2)/2, gc(2)-gs(2)/2], ...
+      repmat(gc(3),1,5), 'r--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
+
+% Obstacle box (rand scenario only)
+if strcmp(scenario, 'rand')
+    oc = S.rand.obs_centre;
+    os = S.rand.obs_spread;
+    plot3([oc(1)-os(1)/2, oc(1)+os(1)/2, oc(1)+os(1)/2, oc(1)-os(1)/2, oc(1)-os(1)/2], ...
+          [oc(2)-os(2)/2, oc(2)-os(2)/2, oc(2)+os(2)/2, oc(2)+os(2)/2, oc(2)-os(2)/2], ...
+          repmat(sc(3),1,5), 'b--', 'LineWidth', 1.5, 'HandleVisibility', 'off');
+end
 
 
 %% Legend 

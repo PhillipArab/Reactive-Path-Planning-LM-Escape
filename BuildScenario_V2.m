@@ -39,12 +39,6 @@ MySensor = uavSensor("Lidar", MyOwnship, MyLidar, ...
                      "MountingAngles", [0 0 0]);
 
 % Build Map
-% waypoints_colours = [1 0 0];
-% for i = 1:size(Waypoints, 1)
-%     addMesh(MyScenario, "cylinder", ...
-%         {[Waypoints(i,1) Waypoints(i,2) 0.5] [(Waypoints(i,3)-3.5) (Waypoints(i,3)-3.4)]}, ...
-%         waypoints_colours);
-% end
 
 obs_colours    = [0.6 0.6 0.6];
 ObstacleHeight = 12;

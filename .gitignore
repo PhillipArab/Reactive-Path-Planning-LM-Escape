@@ -1,0 +1,12 @@
+# Simulink build/cache artifacts
+slprj/
+*.slxc
+*.autosave
+*.asv
+
+# Simulink code generation
+codegen/
+
+# Generated results
+results_*.xlsx
+results_*.csv

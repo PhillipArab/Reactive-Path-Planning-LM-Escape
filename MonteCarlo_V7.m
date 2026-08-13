@@ -1,14 +1,10 @@
-%% MonteCarlo V7
-%{
-Notes:
-- better plots...
-%}
+%% MonteCarlo
 
 %% Parameters
 
-methods = {'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'}; %'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO';
-scenes     = {'E'};     %{'T', 'U', 'E', 'cor', 'rand'};
-N_trials = 1;
+methods = {'VFH', 'FL_APF_WF_VO'}; %'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO';
+scenes     = {'rand'};     %{'T', 'U', 'E', 'cor', 'rand'};
+N_trials = 2;
 
 %% Setup
 
