@@ -7,6 +7,8 @@ slprj/
 # Simulink code generation
 codegen/
 
-# Generated results
+# Generated results and plots
 results_*.xlsx
 results_*.csv
+*.pdf
+*.png

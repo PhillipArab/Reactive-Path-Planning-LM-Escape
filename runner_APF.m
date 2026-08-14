@@ -1,3 +1,3 @@
 %% APF Runner
 
-mdl = 'Model_APF_V1';
+mdl = 'Model_APF';

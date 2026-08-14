@@ -1,3 +1,3 @@
 %% VFH Runner
 
-mdl = 'Model_VFH_V3';
+mdl = 'Model_VFH';
