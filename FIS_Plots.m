@@ -1,5 +1,7 @@
 %% FIS Plots
 
+% Tool to produce plots of FIS Input and Output Membership Functions
+
 %% LM FIS Section
 fis = readfis('FIS_LML.fis');
 % Membership Functions

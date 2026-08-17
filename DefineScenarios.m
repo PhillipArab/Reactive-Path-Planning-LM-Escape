@@ -1,6 +1,6 @@
 %% DefineScenarios.m
 
-% When editing, use "MapBuildingViewer.m" for visualization
+% When editing, use tools/MapViewer.m for visualization
 
 %% Sim Parameters
 UAVSampleTime       = 0.001;

@@ -1,8 +1,19 @@
-%% Map Building Viewer. To be used when editing "DefineScenarios.m"
+%% Map Building Viewer Tool
+%{
 
-% Set Scenario and Map
+To be used when editing "DefineScenarios.m".
 
-scenario = 'cor';
+Instructions
+1. Run core/DefineScenarios.m to load necessary variables to workspace
+2. Set parameters in MapBuildingViewer.m
+3. Run MapBuildingViewer.m to visualize
+
+%}
+
+%% Parameters
+scenario = 'cor';   % Options: 'T', 'U', 'E', 'cor', 'rand'
+
+%% Set Map
 
 startRand = [S.(scenario).start_centre(1) + (rand()-0.5)*S.(scenario).start_spread(1), ...
                    S.(scenario).start_centre(2) + (rand()-0.5)*S.(scenario).start_spread(2), ...
@@ -16,7 +27,7 @@ InitialPosition     = startRand;
 Waypoints           = goalRand;
 
 ObstaclePositions  = S.(scenario).obstacles;
-%InitialOrientation = eul2quat([0 0 0]);
+
 disp("Set Map");
 
 %% Create UAV Scenario 
