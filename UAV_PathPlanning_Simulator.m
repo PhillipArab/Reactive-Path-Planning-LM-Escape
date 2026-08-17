@@ -2,9 +2,17 @@
 
 %% Parameters
 
-methods = {'FL_APF_WF'};  % Options: 'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'
-scenes     = {'T'};              % Options: 'T', 'U', 'E', 'cor', 'rand'
-N_trials = 1;
+% Methods Options: 'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'
+methods = {'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'}; 
+
+% Scenes Options: 'T', 'U', 'E', 'cor', 'rand'
+scenes = {'T', 'U', 'E', 'cor', 'rand'}; 
+
+% Number of trials. Total simulations = [1-4 methods]*[1-5 scenes]*[N_trials]
+N_trials = 3;
+
+plotEverySim = false;   % Reccommended = False, unless testing with small N_trials
+closeModels  = true;    % Reccommended = True, unless running repeated experiments
 
 %% Setup
 
@@ -53,8 +61,11 @@ for s = 1:length(scenes)
             n_steps = length(out.tout);
             t_per_step_ms = (t_total / n_steps)*1000;
             
-            % Plot - ONLY WHEN TESTING/INVESTGATING
-            run("PathPlanPlot.m");
+            % Plot Simulation Result
+            if (plotEverySim)
+                run("PathPlanPlot.m");
+            end
+                      
 
             % Store Results
             metrics = ComputeMetrics(out, ObstaclePositions, ObstaclesWidth);
@@ -80,8 +91,10 @@ for s = 1:length(scenes)
 end
 
 %% Close all models
-for m = 1:length(methods)
-    %close_system(mdl_store.(methods{m}), 0);
+if(closeModels)
+    for m = 1:length(methods)
+        close_system(mdl_store.(methods{m}), 0);
+    end
 end
 
 fprintf('Monte Carlo Complete\n');
