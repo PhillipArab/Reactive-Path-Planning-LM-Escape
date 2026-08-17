@@ -34,6 +34,7 @@ Reactive-Path-Planning-LM-Escape/
 ├── tools/                         # Standalone utilities (not used by main pipeline)
 │   ├── MapViewer.m                # Requires DefineScenarios.m to be run first
 │   └── FIS_plots.m
+│   └── RequirementsCheck.m
 └── results_figures/                # Auto-created on first run; not tracked in git
 ```
 
@@ -75,6 +76,4 @@ closeModels  = true;    % Reccommended = True, unless running repeated experimen
 
 4. Run the script. Results are saved as `.csv` files to `results_figures/`, created automatically on first run.
 
-Bonus 1: To manually edit a scenario map, edit and run `DefineScenarios.m` first, then use `tools/MapViewer.m` to visualize it.
-
-Bonus 2: To view FL input/output Membership Functions, run `FIS_Plots.m`
+*Bonus*: To manually edit a scenario map, edit and run `DefineScenarios.m` first, then use `tools/MapViewer.m` to visualize it.
