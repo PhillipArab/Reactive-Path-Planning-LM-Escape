@@ -68,9 +68,13 @@ for s = 1:length(scenes)
     end
 
     % Save Data of each Method for given Scene
+    outputFolder = 'results_figures';
+    if ~exist(outputFolder, 'dir')
+        mkdir(outputFolder);
+    end
     for m = 1:length(methods)
         filename = sprintf('results_%s_%s.csv', scenes{s}, methods{m});
-        writetable(resultsStore.(methods{m}), ['results_figures' '\' filename]);
+        writetable(resultsStore.(methods{m}), [outputFolder '\' filename]);
         fprintf('Saved %s\n', filename);
     end
 end
