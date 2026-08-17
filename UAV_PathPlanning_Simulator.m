@@ -2,14 +2,21 @@
 
 %% Parameters
 
-methods = {'VFH', 'FL_APF_WF_VO'};  % Options: 'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'
-scenes     = {'rand'};              % Options: 'T', 'U', 'E', 'cor', 'rand'
-N_trials = 2;
+methods = {'FL_APF_WF'};  % Options: 'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'
+scenes     = {'T'};              % Options: 'T', 'U', 'E', 'cor', 'rand'
+N_trials = 1;
 
 %% Setup
 
+% File Paths
+addpath('core');
+addpath('models');
+addpath('FIS');
+addpath('tools');
+
 % Definitions
 run('DefineScenarios.m');
+
 
 % Open all models once
 for m = 1:length(methods)
@@ -63,7 +70,7 @@ for s = 1:length(scenes)
     % Save Data of each Method for given Scene
     for m = 1:length(methods)
         filename = sprintf('results_%s_%s.csv', scenes{s}, methods{m});
-        writetable(resultsStore.(methods{m}), filename);
+        writetable(resultsStore.(methods{m}), ['results_figures' '\' filename]);
         fprintf('Saved %s\n', filename);
     end
 end
