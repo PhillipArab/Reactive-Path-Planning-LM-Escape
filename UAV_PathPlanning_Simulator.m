@@ -90,6 +90,8 @@ for s = 1:length(scenes)
     end
 end
 
+run("CombineResults.m");
+
 %% Close all models
 if(closeModels)
     for m = 1:length(methods)
