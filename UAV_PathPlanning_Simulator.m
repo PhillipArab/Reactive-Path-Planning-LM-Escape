@@ -1,17 +1,17 @@
-%% MonteCarlo Simulations of 4 UAV Reactive Path Planning Models
+%% MonteCarlo Simulations of 6 UAV Reactive Path Planning Models
 
 %% Parameters
 
-% Methods Options: 'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO', 'RB_APF_WF_VO'
-methods = {'FL_APF_WF_VO', 'RB_APF_WF_VO'}; 
+% Methods: 'VFH', 'APF', 'RB_APF_WF', 'RB_APF_WF_VO', 'FL_APF_WF', 'FL_APF_WF_VO'
+methods = {'RB_APF_WF_VO'}; 
 
 % Scenes Options: 'T', 'U', 'E', 'cor', 'rand'
-scenes = {'U'}; 
+scenes = {'E'}; 
 
-% Number of trials. Total simulations = [1-4 methods]*[1-5 scenes]*[N_trials]
-N_trials = 1;
+% Number of trials. Total simulations = [1-6 methods]*[1-5 scenes]*[N_trials]
+N_trials = 2;
 
-plotEverySim = true;   % Reccommended = False, unless testing with small N_trials
+plotEverySim = false;   % Reccommended = False, unless testing with small N_trials
 closeModels  = false;    % Reccommended = True, unless running repeated experiments
 
 %% Setup
