@@ -82,7 +82,7 @@ for s = 1:length(scenes)
     end
 
     % Save Data of each Method for given Scene
-    outputFolder = 'results_figures';
+    outputFolder = 'results';
     if ~exist(outputFolder, 'dir')
         mkdir(outputFolder);
     end
