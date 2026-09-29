@@ -3,7 +3,7 @@
 % Writes results_figures/results_all.csv      (every trial, with Scene/Method columns)
 %        results_figures/results_summary.csv  (one row per Scene x Method)
 
-outputFolder = 'results_figures';
+outputFolder = 'results';
 files = dir(fullfile(outputFolder, 'results_*.csv'));
 files = files(~ismember({files.name}, {'results_all.csv', 'results_summary.csv'}));
 
@@ -22,32 +22,3 @@ end
 allResults = movevars(allResults, {'Scene', 'Method'}, 'Before', 1);
 allResults = sortrows(allResults, {'Scene', 'Method', 'Trial'});
 writetable(allResults, fullfile(outputFolder, 'results_all.csv'));
-
-%% Summary per Scene x Method
-% Success rate over all trials
-S = groupsummary(allResults, {'Scene', 'Method'}, 'mean', 'Success');
-S.Properties.VariableNames{'mean_Success'} = 'SuccessRate';
-
-% Time/path/clearance stats over successful trials only
-% (failed trials would skew these with timeout values)
-succ = allResults(allResults.Success == 1, :);
-M = groupsummary(succ, {'Scene', 'Method'}, {'mean', 'std'}, ...
-    {'CompletionTime', 'PathLength', 'MinThreatDist'});
-M.Properties.VariableNames{'GroupCount'} = 'N_success';
-
-% std of a single value is reported as 0 by MATLAB - make it NaN instead
-stdCols = startsWith(M.Properties.VariableNames, 'std_');
-M{M.N_success < 2, stdCols} = NaN;
-
-% Compute time per step over all trials
-C = groupsummary(allResults, {'Scene', 'Method'}, 'mean', 'CompTimePerStep');
-C = removevars(C, 'GroupCount');
-
-summary = outerjoin(S, M, 'Keys', {'Scene', 'Method'}, 'MergeKeys', true);
-summary = outerjoin(summary, C, 'Keys', {'Scene', 'Method'}, 'MergeKeys', true);
-summary.Properties.VariableNames{'GroupCount'} = 'N_trials';
-summary.N_success(isnan(summary.N_success)) = 0;   % groups with no successes
-summary = movevars(summary, 'N_success', 'After', 'N_trials');
-
-writetable(summary, fullfile(outputFolder, 'results_summary.csv'));
-fprintf('Combined %d files -> results_all.csv, results_summary.csv\n', numel(files));

@@ -3,18 +3,18 @@
 %% Parameters
 
 % Methods: 'VFH', 'APF', 'RB_APF_WF', 'RB_APF_WF_VO', 'FL_APF_WF', 'FL_APF_WF_VO'
-methods = {'VFH', 'APF', 'RB_APF_WF', 'RB_APF_WF_VO', 'FL_APF_WF', 'FL_APF_WF_VO'}; 
+methods = {'RB_APF_WF', 'RB_APF_WF_VO'}; 
 
 % Scenes Options: 'T', 'U', 'E', 'cor', 'rand'
-scenes = {'T', 'U', 'E', 'cor', 'rand'}; 
+scenes = {'E'}; 
 
 % Stop time per map (s) - same for all methods
 stopTimes = struct('T', 60, 'U', 60, 'E', 150, 'cor', 120, 'rand', 120);
 
 % Number of trials. Total simulations = [1-6 methods]*[1-5 scenes]*[N_trials]
-N_trials = 3;
+N_trials = 1;
 
-plotEverySim = false;   % Reccommended = False, unless testing with small N_trials
+plotEverySim = true;   % Reccommended = False, unless testing with small N_trials
 closeModels  = false;    % Reccommended = True, unless running repeated experiments
 
 %% Setup
