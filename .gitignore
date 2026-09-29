@@ -8,7 +8,7 @@ slprj/
 codegen/
 
 # Generated results and plots
-results_*.xlsx
-results_*.csv
+*.xlsx
+*.csv
 *.pdf
 *.png
