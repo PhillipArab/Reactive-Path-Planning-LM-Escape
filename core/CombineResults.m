@@ -1,16 +1,16 @@
-%% Combine per-scene/per-method Monte Carlo CSVs into one table + summary
-% Reads results_figures/results_<scene>_<method>.csv
-% Writes results_figures/results_all.csv      (every trial, with Scene/Method columns)
-%        results_figures/results_summary.csv  (one row per Scene x Method)
+%% Combine per-batch Monte Carlo CSVs into one table
+% Reads  results/seed_<start>-<end>_<scene>_<method>.csv
+% Writes results/results_all.csv (every trial, with Scene/Method columns)
+% If a Scene/Method/Seed appears in multiple files, the newest file's row is kept.
 
 outputFolder = 'results';
-files = dir(fullfile(outputFolder, 'results_*.csv'));
-files = files(~ismember({files.name}, {'results_all.csv', 'results_summary.csv'}));
+files = dir(fullfile(outputFolder, 'seed_*.csv'));
+[~, idx] = sort([files.datenum]);  files = files(idx);   % oldest first
 
 allResults = table();
 for k = 1:numel(files)
-    % Scene names have no underscores; method names do -> split at first underscore
-    tok = regexp(files(k).name, '^results_([^_]+)_(.+)\.csv$', 'tokens', 'once');
+    % Scene names have no underscores; method names do -> scene is first token after seed range
+    tok = regexp(files(k).name, '^seed_\d+-\d+_([^_]+)_(.+)\.csv$', 'tokens', 'once');
     if isempty(tok), continue; end
 
     T = readtable(fullfile(files(k).folder, files(k).name));
@@ -19,6 +19,16 @@ for k = 1:numel(files)
     allResults = [allResults; T]; %#ok<AGROW>
 end
 
+if isempty(allResults)
+    warning('No seed_*.csv files found in %s', outputFolder);
+    return;
+end
+
+% Remove duplicates: keep the newest run of each Scene/Method/Seed
+[~, keep] = unique(allResults(:, {'Scene','Method','Seed'}), 'last');
+allResults = allResults(keep, :);
+
 allResults = movevars(allResults, {'Scene', 'Method'}, 'Before', 1);
-allResults = sortrows(allResults, {'Scene', 'Method', 'Trial'});
+allResults = sortrows(allResults, {'Scene', 'Method', 'Seed'});
 writetable(allResults, fullfile(outputFolder, 'results_all.csv'));
+fprintf('Combined %d files -> results_all.csv (%d rows)\n', numel(files), height(allResults));
