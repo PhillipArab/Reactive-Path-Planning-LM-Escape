@@ -23,6 +23,8 @@ Reactive-Path-Planning-LM-Escape/
 │   ├── DefineScenarios.m
 │   ├── BuildScenario.m
 │   ├── RandomizePositions.m
+│   ├── PathPlanPlot.m
+│   ├── CombineResults.m
 │   ├── ComputeMetrics.m
 │   └── runner_*.m                 # One runner per planning method
 ├── models/                        # Simulink models
@@ -60,20 +62,23 @@ Reactive-Path-Planning-LM-Escape/
 3. Adjust the parameters block at the top of the script:
 
 ```matlab
-%% Parameters
-% Methods Options: 'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'
-methods = {'VFH', 'APF', 'FL_APF_WF', 'FL_APF_WF_VO'}; 
+%% Main Parameters
+
+% Methods: 'VFH', 'APF', 'RB_APF_WF', 'RB_APF_WF_VO', 'FL_APF_WF', 'FL_APF_WF_VO'
+methods = {'VFH', 'APF', 'RB_APF_WF', 'RB_APF_WF_VO', 'FL_APF_WF', 'FL_APF_WF_VO'}; 
 
 % Scenes Options: 'T', 'U', 'E', 'cor', 'rand'
 scenes = {'T', 'U', 'E', 'cor', 'rand'}; 
 
-% Number of trials. Total simulations = [1-4 methods]*[1-5 scenes]*[N_trials]
-N_trials = 3;
+% Seed of first trial (trial n uses seed = seed_start + n - 1)
+seed_start = 1;
 
-plotEverySim = false;   % Reccommended = False, unless testing with small N_trials
-closeModels  = true;    % Reccommended = True, unless running repeated experiments
+% Number of trials/seeds. Total simulations = [1-6 methods]*[1-5 scenes]*[N_trials]
+N_trials = 5;
 ```
 
-4. Run the script. Results are saved as `.csv` files to `results_figures/`, created automatically on first run.
+4. Run the script. Results are saved as `.csv` files to `results`, created automatically on first run.
 
-*Bonus*: To manually edit a scenario map, edit and run `DefineScenarios.m` first, then use `tools/MapViewer.m` to visualize it.
+*Bonus*: 
+1. To manually edit a scenario map, edit and run `DefineScenarios.m` first, then use `tools/MapViewer.m` to visualize it.
+2. To change run times per map or plot simulations, see 'Other Parameters' in `UAV_PathPlanning_Simulator.m`
