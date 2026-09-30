@@ -3,24 +3,24 @@
 %% Main Parameters
 
 % Methods: 'VFH', 'APF', 'RB_APF_WF', 'RB_APF_WF_VO', 'FL_APF_WF', 'FL_APF_WF_VO'
-methods = {'RB_APF_WF', 'RB_APF_WF_VO', 'VFH'}; 
+methods = {'VFH', 'APF', 'RB_APF_WF', 'RB_APF_WF_VO', 'FL_APF_WF', 'FL_APF_WF_VO'}; 
 
 % Scenes Options: 'T', 'U', 'E', 'cor', 'rand'
-scenes = {'E', 'U'}; 
+scenes = {'T', 'U', 'E', 'cor', 'rand'}; 
 
 % Seed of first trial (trial n uses seed = seed_start + n - 1)
-seed_start = 2;
+seed_start = 1;
 
-% Number of trials. Total simulations = [1-6 methods]*[1-5 scenes]*[N_trials]
-N_trials = 3;
+% Number of trials/seeds. Total simulations = [1-6 methods]*[1-5 scenes]*[N_trials]
+N_trials = 5;
 
 %% Other Parameters [CAREFUL before changing]
 
 % Stop time per map (s) - same for all methods
-stopTimes = struct('T', 60, 'U', 60, 'E', 150, 'cor', 120, 'rand', 120);
+stopTimes = struct('T', 60, 'U', 90, 'E', 150, 'cor', 120, 'rand', 120);
 
 plotEverySim = false;   % Reccommended = False, unless testing with small N_trials
-closeModels  = false;    % Reccommended = True, unless running repeated experiments
+closeModels  = true;    % Reccommended = True, unless running repeated experiments
 
 %% Setup
 

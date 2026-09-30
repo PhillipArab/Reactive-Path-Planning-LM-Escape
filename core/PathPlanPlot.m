@@ -13,6 +13,7 @@ if ~exist('finalVOList',     'var'), finalVOList      = []; end
 % Colours
 LM_colour = [1 0 1]; % Magenta
 CP_colour = [0 1 0]; % Green
+VO_colour = [0 1 1]; % Cyan
 
 % Waypoint draw for pictures
 waypoints_colours = [1 0 0];
@@ -22,18 +23,29 @@ for i = 1:size(Waypoints, 1)
         waypoints_colours);
 end
 
+% Marker sizes
+pt_r  = 0.30;   pt_h  = 0.30;   % LM & CP: radius, half-height
+vo_r  = 0.60;   vo_h  = 0.10;   % VO: radius, half-height
+
 % Local Minima (magenta) - cylinder
 for i = 1:finalMinimaCount
     addMesh(MyScenario,"cylinder",{[finalMinimaList(i,1) ...
-        finalMinimaList(i,2) 0.5] [(finalMinimaList(i,3)-0.15) ...
-        (finalMinimaList(i,3)+0.15)]}, LM_colour);
+        finalMinimaList(i,2) pt_r] [(finalMinimaList(i,3)-pt_h) ...
+        (finalMinimaList(i,3)+pt_h)]}, LM_colour);
 end
 
 % Critical Points (green) - cylinder
 for i = 1:finalCPCount
     addMesh(MyScenario,"cylinder",{[finalCPList(i,1) ...
-        finalCPList(i,2) 0.5] [(finalCPList(i,3)-0.15) ...
-        (finalCPList(i,3)+0.15)]}, CP_colour);
+        finalCPList(i,2) pt_r] [(finalCPList(i,3)-pt_h) ...
+        (finalCPList(i,3)+pt_h)]}, CP_colour);
+end
+
+% Virtual Obstacles (cyan) - cylinder
+for i = 1:finalVOCount
+    addMesh(MyScenario,"cylinder",{[finalVOList(i,1) ...
+        finalVOList(i,2) vo_r] [(finalVOList(i,3)-vo_h) ...
+        (finalVOList(i,3)+vo_h)]}, VO_colour);
 end
 
 %% Initialize Figure
@@ -41,6 +53,16 @@ figure;
 show3D(MyScenario);
 hold on;
 title("Path Planning Points View");
+
+% Remove mesh edge lines for markers
+p = findobj(gca,'Type','Patch');
+markerColours = [LM_colour; CP_colour; VO_colour; waypoints_colours];
+for k = 1:numel(p)
+    fc = p(k).FaceColor;
+    if isnumeric(fc) && ismember(fc, markerColours, 'rows')
+        p(k).EdgeColor = 'none';
+    end
+end
 
 %% Add overlay line plots
 
@@ -82,14 +104,15 @@ h_way  = patch(nan,nan,nan, 'FaceColor',waypoints_colours, 'EdgeColor','none');
 h_obs  = patch(nan,nan,nan, 'FaceColor',obs_colours, 'EdgeColor','none');
 h_lm   = patch(nan,nan,nan, 'FaceColor',LM_colour, 'EdgeColor','none');
 h_cp   = patch(nan,nan,nan, 'FaceColor',CP_colour, 'EdgeColor','none');
+h_vo   = patch(nan,nan,nan, 'FaceColor',VO_colour, 'EdgeColor','none');
 h_start = plot3(nan,nan,nan, 'b--', 'LineWidth', 1.5);
 h_goal  = plot3(nan,nan,nan, 'r--', 'LineWidth', 1.5);
 h_uav = plot3(nan, nan, nan, 'bx', 'MarkerSize', 14, 'LineWidth', 1);
 
 % Legend
-legend([h_obs, h_way, h_uav, h_traj, h_lm, h_cp], ...
+legend([h_obs, h_way, h_uav, h_traj, h_lm, h_cp, h_vo], ...
        ["Obstacles","Goal","UAV Start", ...
-        "Trajectory","Local Minima","Critical Points"]);
+        "Trajectory","Local Minima","Critical Points","Virtual Obstacles"]);
 
 
 disp("Plotting Complete");
